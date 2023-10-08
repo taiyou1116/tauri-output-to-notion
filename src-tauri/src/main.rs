@@ -1,15 +1,23 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-// Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-#[tauri::command]
-fn greet(name: &str) -> String {
-    format!("Hello, {}! You've been greeted from Rust!", name)
-}
+mod copy_from_chatgpt;
+mod notion_json_template;
+mod reqwest_to_notion;
 
-fn main() {
+#[tokio::main]
+async fn main() {
+    let input = copy_from_chatgpt::run();
+    match reqwest_to_notion::run(input).await {
+        Ok(_) => {
+            println!("OK");
+        }
+        Err(e) => {
+            println!("{}", e);
+        }
+    }
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![greet])
+        .invoke_handler(tauri::generate_handler![])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
