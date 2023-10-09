@@ -2,49 +2,41 @@
 import { useState } from "react";
 import "./App.css";
 import Button from "./components/Button";
+import { invoke } from "@tauri-apps/api";
 
 function App() {
   const [dbId, setDbId] = useState("");
-  const [key, setKey] = useState("");
+  const [secretKey, setSecretKey] = useState("");
 
-  const saveKey = () => {
-    
+  const saveSecretKeyAndDbId = async () => {
+    const result = await invoke('save_secret_key', {secretKey, dbId});
+    if (typeof result === 'string') {
+      console.log(`Err: ${result}`);
+    }
   }
-
-  const saveDbId = () => {
-
-  }
-
 
   return(
-    <div className="flex flex-col items-center justify-center h-screen gap-5">
+    <div className="flex flex-col items-center justify-center h-screen gap-5 bg-gray-200">
       <h1 className="font-bold text-2xl">初期設定</h1>
-      <div className="flex gap-3 items-start">
+      <div className="flex gap-3">
         <input 
           type="text" 
           placeholder="シークレットキーを入力" 
           className="px-4 py-2 border rounded-md"
-          onChange={(e) => setKey(e.target.value)}
+          onChange={(e) => setSecretKey(e.target.value)}
         />
-        <Button 
-          text="シークレットキー保存"
-          variant="primary"
-          onClick={() => saveKey()}
-        />
-      </div>
-      <div className="flex gap-3 items-start">
         <input 
           type="text" 
           placeholder="データベースIDを入力" 
           className="px-4 py-2 border rounded-md"
           onChange={(e) => setDbId(e.target.value)}
         />
-        <Button 
-          text="データベースIDを保存"
-          variant="primary"
-          onClick={() => saveDbId()}
-        />
       </div>
+      <Button 
+          text="シークレットキー保存"
+          variant="primary"
+          onClick={() => saveSecretKeyAndDbId()}
+        />
     </div>
   )
 }
