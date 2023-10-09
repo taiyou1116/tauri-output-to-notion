@@ -534,6 +534,14 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.m-3 {
+  margin: 0.75rem;
+}
+
+.m-6 {
+  margin: 1.5rem;
+}
+
 .flex {
   display: flex;
 }
@@ -544,6 +552,66 @@ video {
 
 .h-10 {
   height: 2.5rem;
+}
+
+.h-40 {
+  height: 10rem;
+}
+
+.h-32 {
+  height: 8rem;
+}
+
+.h-5\/6 {
+  height: 83.333333%;
+}
+
+.h-\[32\] {
+  height: 32;
+}
+
+.h-\[33vh\] {
+  height: 33vh;
+}
+
+.h-\[66vh\] {
+  height: 66vh;
+}
+
+.h-\[90vh\] {
+  height: 90vh;
+}
+
+.w-40 {
+  width: 10rem;
+}
+
+.w-64 {
+  width: 16rem;
+}
+
+.w-96 {
+  width: 24rem;
+}
+
+.w-\[64\] {
+  width: 64;
+}
+
+.w-\[100\] {
+  width: 100;
+}
+
+.w-\[33vw\] {
+  width: 33vw;
+}
+
+.w-\[66vw\] {
+  width: 66vw;
+}
+
+.resize-none {
+  resize: none;
 }
 
 .flex-col {
@@ -628,6 +696,15 @@ video {
 .py-2 {
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+.px-2 {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .align-top {
