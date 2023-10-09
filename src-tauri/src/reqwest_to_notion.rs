@@ -38,7 +38,7 @@ async fn send_reqwest(
 
 #[tauri::command]
 pub async fn run(copy_text: String) -> Result<(), String> {
-    let input = copy_from_chatgpt::run(copy_text);
+    let input = copy_from_chatgpt::run(copy_text)?;
     dotenv().ok();
     let token = std::env::var("TOKEN").unwrap();
     let database_id = std::env::var("DBID").unwrap();

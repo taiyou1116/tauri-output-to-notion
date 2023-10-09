@@ -41,15 +41,18 @@ function App() {
 
   const sendReqwestToNotion = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
-    console.log("Before setCopyText: ", copyText);
     const promise = invoke('run', {copyText});
+    const lines = copyText.split('\n');
+    const word = lines[1];
     setCopyText("");
     toast.promise(
       promise,
       {
-        success: "good",
-        loading: "loadind",
-        error: "err",
+        success: `Notionに '${word}' を追加しました`,
+        loading: `Notionに '${word}' を追加中...`,
+        error: `エラー '${word}' : 以下の項目を確認してください
+                                \nシークレットキーとデータベースIDが合っているか確認してください
+                                \nコピー文のテンプレートが合っているか確認してください`,
       }
     )
     const result = await promise;

@@ -6,8 +6,7 @@ mod copy_from_chatgpt;
 mod notion_json_template;
 mod reqwest_to_notion;
 
-#[tokio::main]
-async fn main() {
+fn main() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             config::save_secret_key_and_db_id,
