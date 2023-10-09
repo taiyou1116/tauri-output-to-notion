@@ -18,7 +18,10 @@ async fn main() {
     //     }
     // }
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![config::save_secret_key_and_db_id,])
+        .invoke_handler(tauri::generate_handler![
+            config::save_secret_key_and_db_id,
+            config::verify_api_key_on_startup
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
