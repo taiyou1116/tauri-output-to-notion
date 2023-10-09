@@ -40,8 +40,8 @@ async fn send_reqwest(
 pub async fn run(copy_text: String) -> Result<(), String> {
     let input = copy_from_chatgpt::run(copy_text)?;
     dotenv().ok();
-    let token = std::env::var("TOKEN").unwrap();
-    let database_id = std::env::var("DBID").unwrap();
+    let token = std::env::var("TOKEN").map_err(|e| format!("Failed to get TOKEN: {}", e))?;
+    let database_id = std::env::var("DBID").map_err(|e| format!("Failed to get TOKEN: {}", e))?;
     let url = format!("{}/pages", NOTION_API_URL);
 
     let client = Client::new();
@@ -58,7 +58,13 @@ pub async fn run(copy_text: String) -> Result<(), String> {
 
     // blockを作成
     if let Ok(results) = create_parent_block(&client, &token, res_json).await {
-        let res = results["results"].as_array().expect("resultsでエラー");
+        let res;
+        match results["results"].as_array() {
+            Some(results_array) => {
+                res = results_array;
+            }
+            None => return Err("resultsでエラー".into()),
+        }
 
         let index_mapping = [(0, 2), (1, 3), (2, 4), (3, 5), (4, 6), (6, 7)];
 
