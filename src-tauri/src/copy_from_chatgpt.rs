@@ -1,9 +1,5 @@
-use std::io::{self, Read};
-
-pub fn run() -> Vec<String> {
+pub fn run(text: String) -> Vec<String> {
     // textはフロントから受け取る
-    let mut text = String::new();
-    io::stdin().read_to_string(&mut text).unwrap();
 
     // 文章を "■" で分割
     let split_texts: Vec<&str> = text.split("■").collect();

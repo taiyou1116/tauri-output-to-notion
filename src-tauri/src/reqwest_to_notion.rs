@@ -1,3 +1,4 @@
+use crate::copy_from_chatgpt;
 use crate::notion_json_template;
 use dotenv::dotenv;
 use reqwest::Client;
@@ -35,7 +36,9 @@ async fn send_reqwest(
     Ok(res_json)
 }
 
-pub async fn run(input: Vec<String>) -> Result<(), String> {
+#[tauri::command]
+pub async fn run(copy_text: String) -> Result<(), String> {
+    let input = copy_from_chatgpt::run(copy_text);
     dotenv().ok();
     let token = std::env::var("TOKEN").unwrap();
     let database_id = std::env::var("DBID").unwrap();

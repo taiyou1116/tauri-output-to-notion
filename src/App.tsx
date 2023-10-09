@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Button from "./components/Button";
 import { invoke } from "@tauri-apps/api";
+import { Toaster, toast } from "react-hot-toast";
 
 function App() {
   const [dbId, setDbId] = useState("");
@@ -41,7 +42,21 @@ function App() {
   const sendReqwestToNotion = async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     e.preventDefault();
     console.log("Before setCopyText: ", copyText);
+    const promise = invoke('run', {copyText});
     setCopyText("");
+    toast.promise(
+      promise,
+      {
+        success: "good",
+        loading: "loadind",
+        error: "err",
+      }
+    )
+    const result = await promise;
+    if (typeof result === 'string') {
+      console.log(`Err: ${result}`);
+      return;
+    }
   };
   
   return(
@@ -83,6 +98,14 @@ function App() {
           />
         </div>
       )}
+
+      {/* どのように通知を出すか */}
+      <Toaster
+        position="top-left"
+        toastOptions={{
+          className:'bg-gray-50 dark:bg-slate-600 dark:text-white rounded-md shadow-md'
+        }}
+      />
     </div>
     
   )
