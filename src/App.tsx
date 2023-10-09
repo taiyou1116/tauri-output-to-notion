@@ -66,16 +66,21 @@ function App() {
     <div className="bg-gray-200">
       { isSetting ? (
         <div className="flex flex-col h-screen items-center justify-center">
-          <ul className="m-3">
+          <ul>
             <li><p>①コピーしたテキストをペースト(cmd + v)</p></li>
             <li><p>②Enter</p></li>
           </ul>
-            <textarea 
-              className="border h-[66vh] w-[66vw] resize-none rounded-md py-2 px-2"
-              onChange={(e) => setCopyText(e.target.value)}
-              value={copyText}
-              onKeyDown={(e) => handleKeyDown(e)}
-            />
+          <textarea 
+            className="border h-[66vh] w-[66vw] resize-none rounded-md py-2 px-2 m-3"
+            onChange={(e) => setCopyText(e.target.value)}
+            value={copyText}
+            onKeyDown={(e) => handleKeyDown(e)}
+          />
+          <Button 
+            text="再度シークレットキーとデータベースIDを設定"
+            variant="default"
+            onClick={() => {setIsSetting(false);}}
+          />
         </div>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen gap-5">
@@ -95,7 +100,7 @@ function App() {
             />
           </div>
           <Button 
-            text="シークレットキー保存"
+            text="シークレットキーとデータベースIDを設定"
             variant="primary"
             onClick={() => saveSecretKeyAndDbId()}
           />
